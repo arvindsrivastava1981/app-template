@@ -1,0 +1,82 @@
+import { NextResponse } from "next/server";
+import { db } from "@/backend/lib/core/db";
+import { hashPassword } from "@/backend/lib/auth/password";
+import { createSessionToken, COOKIE_NAME, SESSION_TTL_SECONDS, normalizeEmail, normalizePhone, isValidPhone } from "@/backend/lib/auth/session";
+import { logError } from "@/backend/lib/core/error-log";
+import { appBaseUrl } from "@/backend/lib/core/app-url";
+import { sendEmail } from "@/backend/lib/core/email";
+
+function sessionCookie(token, ttlSeconds) {
+  return {
+    name: COOKIE_NAME,
+    value: token,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: ttlSeconds,
+  };
+}
+
+export async function POST(request) {
+  try {
+    const body = await request.json();
+    const email = normalizeEmail(body.email);
+    const password = String(body.password || "");
+    const fullName = String(body.full_name || "").trim();
+
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      return NextResponse.json({ error: "Enter a valid email address." }, { status: 400 });
+    }
+    if (password.length < 8) {
+      return NextResponse.json({ error: "Password must be at least 8 characters." }, { status: 400 });
+    }
+    if (!fullName) {
+      return NextResponse.json({ error: "Enter your full name." }, { status: 400 });
+    }
+
+    const sql = db();
+    const existing = await sql`SELECT id FROM users WHERE email = ${email} LIMIT 1`;
+    if (existing.length) {
+      return NextResponse.json({ error: "An account with that email already exists." }, { status: 409 });
+    }
+
+    const passwordHash = await hashPassword(password);
+    const userId = crypto.randomUUID();
+    const verificationToken = crypto.randomUUID().replace(/-/g, "");
+    const verificationExpires = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+
+    try {
+      await sql`
+        INSERT INTO users (id, email, password_hash, full_name, role, is_admin, is_email_verified, verification_token, verification_token_expires_at, created_at, updated_at)
+        VALUES (${userId}, ${email}, ${passwordHash}, ${fullName}, 'user', FALSE, FALSE, ${verificationToken}, ${verificationExpires}, NOW(), NOW())
+      `;
+    } catch (err) {
+      console.error("[auth] register tx failed:", err);
+      await logError({ endpoint: "auth/register", status_code: 500, message: "Registration failed", detail: { email }, traceback_text: err, source: "BACKEND" });
+      return NextResponse.json({ error: "Could not create your account. Please try again." }, { status: 500 });
+    }
+
+    try {
+      const baseUrl = appBaseUrl(request);
+      const link = `${baseUrl}/verify-email?token=${verificationToken}`;
+      await sendEmail({
+        to: email,
+        subject: "Verify your email",
+        html: `<p>Please verify your email address:</p><p><a href="${link}">${link}</a></p><p>This link expires in 48 hours.</p>`,
+      });
+    } catch (err) {
+      console.error("[auth] verification email failed:", err);
+    }
+
+    const ttlSeconds = SESSION_TTL_SECONDS;
+    const token = await createSessionToken(userId, ttlSeconds);
+    const response = NextResponse.json({ ok: true, message: "Account created successfully.", is_admin: false, role: "user" }, { status: 201 });
+    response.cookies.set(sessionCookie(token, ttlSeconds));
+    return response;
+  } catch (err) {
+    console.error("[auth] register failed:", err);
+    await logError({ endpoint: "auth/register", status_code: 500, message: "Registration failed", traceback_text: err, source: "BACKEND" });
+    return NextResponse.json({ error: "Registration failed. Please try again." }, { status: 500 });
+  }
+}
