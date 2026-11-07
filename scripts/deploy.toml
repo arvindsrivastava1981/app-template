@@ -11,10 +11,10 @@ directory = ".open-next/assets"
 binding = "ASSETS"
 
 [vars]
-NEXT_PUBLIC_APP_URL = "https://your-domain.in"
+NEXT_PUBLIC_APP_URL = "https://bima.vahankhata.in"
 
 [env.production.vars]
-NEXT_PUBLIC_APP_URL = "https://your-domain.in"
+NEXT_PUBLIC_APP_URL = "https://bima.vahankhata.in"
 
 # Deployment commands:
 #   npm run build:cf   # Build for Cloudflare
