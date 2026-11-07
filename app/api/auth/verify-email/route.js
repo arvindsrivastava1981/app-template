@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { db } from "@/backend/lib/core/db";
-import { logError, logStatusError } from "@/backend/lib/core/error-log";
+import { db } from "@/lib/core/db";
+import { logError, logStatusError } from "@/lib/core/error-log";
 
 export async function GET(request) {
   try {
@@ -23,7 +23,7 @@ export async function GET(request) {
     }
 
     await sql`
-      UPDATE users SET is_email_verified = TRUE, verification_token = NULL, verification_token_expires_at = NULL
+      UPDATE users SET verification_token = NULL, verification_token_expires_at = NULL
       WHERE id = ${row.id}
     `;
 

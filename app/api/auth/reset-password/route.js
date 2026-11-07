@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { db } from "@/backend/lib/core/db";
-import { hashPassword } from "@/backend/lib/auth/password";
-import { logError, logStatusError } from "@/backend/lib/core/error-log";
+import { db } from "@/lib/core/db";
+import { hashPassword } from "@/lib/auth/password";
+import { logError, logStatusError } from "@/lib/core/error-log";
 
 export async function POST(request) {
   try {

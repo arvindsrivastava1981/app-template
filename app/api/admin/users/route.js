@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/backend/lib/auth/current-user";
-import { isAdmin } from "@/backend/lib/auth/admin";
-import { listUsers, createUser, updateUser, deleteUser } from "@/backend/lib/auth/admin";
-import { logError } from "@/backend/lib/core/error-log";
+import { getCurrentUser } from "@/lib/auth/current-user";
+import { isAdmin, listUsers, createUser, updateUser, deleteUser } from "@/lib/auth/admin";
+import { logError } from "@/lib/core/error-log";
 
 export async function GET(request) {
   try {
     const ctx = await getCurrentUser();
     if (!ctx) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (!(await isAdmin(ctx.userId))) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (!(await isAdmin(ctx.user.id))) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
     const users = await listUsers();
     return NextResponse.json({ ok: true, users }, { status: 200 });
@@ -23,7 +22,7 @@ export async function POST(request) {
   try {
     const ctx = await getCurrentUser();
     if (!ctx) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (!(await isAdmin(ctx.userId))) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (!(await isAdmin(ctx.user.id))) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
     const body = await request.json();
     const result = await createUser({
@@ -46,7 +45,7 @@ export async function PATCH(request) {
   try {
     const ctx = await getCurrentUser();
     if (!ctx) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (!(await isAdmin(ctx.userId))) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (!(await isAdmin(ctx.user.id))) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
     const body = await request.json();
     const { userId, ...updates } = body;
@@ -66,7 +65,7 @@ export async function DELETE(request) {
   try {
     const ctx = await getCurrentUser();
     if (!ctx) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (!(await isAdmin(ctx.userId))) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (!(await isAdmin(ctx.user.id))) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("id");

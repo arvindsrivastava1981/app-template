@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { db } from "@/backend/lib/core/db";
-import { hashPassword } from "@/backend/lib/auth/password";
-import { createSessionToken, COOKIE_NAME, SESSION_TTL_SECONDS, normalizeEmail, normalizePhone, isValidPhone } from "@/backend/lib/auth/session";
-import { logError } from "@/backend/lib/core/error-log";
-import { appBaseUrl } from "@/backend/lib/core/app-url";
-import { sendEmail } from "@/backend/lib/core/email";
+import { db } from "@/lib/core/db";
+import { hashPassword } from "@/lib/auth/password";
+import { createSessionToken, COOKIE_NAME, SESSION_TTL_SECONDS, normalizeEmail } from "@/lib/auth/session";
+import { logError } from "@/lib/core/error-log";
+import { appBaseUrl } from "@/lib/core/app-url";
+import { sendEmail } from "@/lib/core/email";
 
 function sessionCookie(token, ttlSeconds) {
   return {
@@ -48,8 +48,8 @@ export async function POST(request) {
 
     try {
       await sql`
-        INSERT INTO users (id, email, password_hash, full_name, role, is_admin, is_email_verified, verification_token, verification_token_expires_at, created_at, updated_at)
-        VALUES (${userId}, ${email}, ${passwordHash}, ${fullName}, 'user', FALSE, FALSE, ${verificationToken}, ${verificationExpires}, NOW(), NOW())
+        INSERT INTO users (id, email, password_hash, full_name, verification_token, verification_token_expires_at, created_at, updated_at)
+        VALUES (${userId}, ${email}, ${passwordHash}, ${fullName}, ${verificationToken}, ${verificationExpires}, NOW(), NOW())
       `;
     } catch (err) {
       console.error("[auth] register tx failed:", err);
@@ -71,7 +71,7 @@ export async function POST(request) {
 
     const ttlSeconds = SESSION_TTL_SECONDS;
     const token = await createSessionToken(userId, ttlSeconds);
-    const response = NextResponse.json({ ok: true, message: "Account created successfully.", is_admin: false, role: "user" }, { status: 201 });
+    const response = NextResponse.json({ ok: true, message: "Account created successfully." }, { status: 201 });
     response.cookies.set(sessionCookie(token, ttlSeconds));
     return response;
   } catch (err) {

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { db } from "@/backend/lib/core/db";
-import { sendEmail } from "@/backend/lib/core/email";
-import { logError } from "@/backend/lib/core/error-log";
-import { normalizeEmail } from "@/backend/lib/auth/session";
-import { appBaseUrl } from "@/backend/lib/core/app-url";
+import { db } from "@/lib/core/db";
+import { sendEmail } from "@/lib/core/email";
+import { logError } from "@/lib/core/error-log";
+import { normalizeEmail } from "@/lib/auth/session";
+import { appBaseUrl } from "@/lib/core/app-url";
 
 export async function POST(request) {
   try {

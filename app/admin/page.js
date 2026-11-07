@@ -3,7 +3,6 @@ import { LayoutDashboard, Users, Shield, Settings, AlertTriangle } from "lucide-
 import PageHeader from "@/components/layout/PageHeader";
 import Card from "@/components/ui/Card";
 import { db } from "@/lib/core/db";
-import { isAdmin } from "@/lib/auth/admin";
 
 export const dynamic = "force-dynamic";
 

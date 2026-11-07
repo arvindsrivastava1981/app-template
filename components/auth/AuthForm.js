@@ -78,7 +78,7 @@ export default function AuthForm({ mode, token = "" }) {
 
       if (response.ok) {
         if (mode === "login" || mode === "register") {
-          window.location.href = result.is_admin ? "/admin" : "/app";
+          window.location.href = "/app";
         } else {
           setState({ ok: true, message: result.message || "Done." });
           toast(result.message || "Done.", "success");

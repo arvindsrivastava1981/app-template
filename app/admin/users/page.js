@@ -112,8 +112,6 @@ export default function UserManagementPage() {
     }
   }
 
-  const roleLabel = (role) => (role === "admin" ? "Admin" : "User");
-
   return (
     <div className="mx-auto max-w-4xl space-y-8">
       <div className="flex items-center justify-between">
@@ -130,8 +128,7 @@ export default function UserManagementPage() {
               <tr className="border-b border-zinc-200 dark:border-zinc-800">
                 <th className="pb-3 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Name</th>
                 <th className="pb-3 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Email</th>
-                <th className="pb-3 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Role</th>
-                <th className="pb-3 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Verified</th>
+
                 <th className="pb-3 text-sm font-semibold text-zinc-600 dark:text-zinc-400">Actions</th>
               </tr>
             </thead>
@@ -140,12 +137,7 @@ export default function UserManagementPage() {
                 <tr key={u.id} className="border-b border-zinc-200 dark:border-zinc-800">
                   <td className="py-3 text-sm text-zinc-900 dark:text-zinc-100">{u.full_name || "—"}</td>
                   <td className="py-3 text-sm text-zinc-900 dark:text-zinc-100">{u.email}</td>
-                  <td className="py-3 text-sm">
-                    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ${u.role === "admin" ? "bg-violet-100 text-violet-700 dark:bg-violet-900 dark:text-violet-300" : "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"}`}>
-                      {roleLabel(u.role || "user")}
-                    </span>
-                  </td>
-                  <td className="py-3 text-sm">{u.is_email_verified ? <span className="text-xs flex items-center gap-1 text-emerald-600 dark:text-emerald-400"><Mail className="h-3 w-3" /> Verified</span> : <span className="text-xs text-zinc-500 dark:text-zinc-500">Pending</span>}</td>
+
                   <td className="py-3 text-sm">
                     <div className="flex items-center gap-2">
                       <button onClick={() => openEdit(u)} className="rounded-lg p-2 text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800" title="Edit user"><Edit className="h-4 w-4" /></button>
@@ -186,13 +178,6 @@ export default function UserManagementPage() {
                   <input value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} type="password" className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none transition focus:border-emerald-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-emerald-400" minLength={8} required />
                 </div>
               )}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400">Role</label>
-                <select value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none transition focus:border-emerald-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-emerald-400">
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
               <div className="mt-6 flex justify-end gap-3">
                 <button type="button" onClick={closeModal} className="rounded-lg px-4 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800">Cancel</button>
                 <button type="submit" disabled={saving} className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-60 hover:bg-emerald-700">{saving ? "Saving..." : editingId ? "Update User" : "Create User"}</button>
