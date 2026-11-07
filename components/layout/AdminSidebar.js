@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { LayoutDashboard, Users, Shield, Settings, LogOut, Menu, X, AlertTriangle } from "lucide.react";
+import { LayoutDashboard, Users, Shield, Settings, LogOut, Menu, X, AlertTriangle } from "lucide-react";
 
 const NAV = [
   { label: "Admin", items: [

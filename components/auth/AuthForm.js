@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Loader2 } from "lucide.react";
+import { Loader2 } from "lucide-react";
 import { toast } from "@/components/ui/Toaster";
 
 const TITLES = {

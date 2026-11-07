@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { LayoutDashboard, Settings, LogOut, Menu, X, ShieldCheck } from "lucide.react";
+import { LayoutDashboard, Settings, LogOut, Menu, X, ShieldCheck } from "lucide-react";
 
 const NAV = [
   { label: "Overview", items: [{ href: "/app", label: "Dashboard", icon: LayoutDashboard }] },

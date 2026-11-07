@@ -18,7 +18,7 @@
     "bcryptjs": "^3.0.3",
     "jose": "^6.2.12",
     "lucide-react": "^1.43.0",
-    "next": "16.3.4",
+    "next": "16.4.5",
     "pg": "^8.23.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
@@ -26,7 +26,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.20.6",
+    "@opennextjs/cloudflare": "^1.20.16",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
