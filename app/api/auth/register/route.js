@@ -35,9 +35,11 @@ export async function POST(request) {
       return NextResponse.json({ error: "Enter your full name." }, { status: 400 });
     }
 
-    const sql = db();
-    const existing = await sql`SELECT id FROM users WHERE email = ${email} LIMIT 1`;
-    if (existing.length) {
+    const existing = await db.user.findUnique({
+      where: { email },
+      select: { id: true },
+    });
+    if (existing) {
       return NextResponse.json({ error: "An account with that email already exists." }, { status: 409 });
     }
 
@@ -47,10 +49,16 @@ export async function POST(request) {
     const verificationExpires = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
 
     try {
-      await sql`
-        INSERT INTO users (id, email, password_hash, full_name, verification_token, verification_token_expires_at, created_at, updated_at)
-        VALUES (${userId}, ${email}, ${passwordHash}, ${fullName}, ${verificationToken}, ${verificationExpires}, NOW(), NOW())
-      `;
+      await db.user.create({
+        data: {
+          id: userId,
+          email,
+          password_hash: passwordHash,
+          full_name: fullName,
+          verification_token: verificationToken,
+          verification_token_expires_at: verificationExpires,
+        },
+      });
     } catch (err) {
       console.error("[auth] register tx failed:", err);
       await logError({ endpoint: "auth/register", status_code: 500, message: "Registration failed", detail: { email }, traceback_text: err, source: "BACKEND" });

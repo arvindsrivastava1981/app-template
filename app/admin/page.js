@@ -8,10 +8,8 @@ export const dynamic = "force-dynamic";
 
 async function getStats() {
   try {
-    const [userRows] = await Promise.all([
-      db()`SELECT COUNT(*)::int AS count FROM users`,
-    ]);
-    return { totalUsers: userRows[0]?.count ?? 0 };
+    const totalUsers = await db.user.count();
+    return { totalUsers };
   } catch {
     return { totalUsers: 0 };
   }

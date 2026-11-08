@@ -14,15 +14,14 @@ export async function POST(request) {
       return NextResponse.json({ error: "Enter a valid email address." }, { status: 400 });
     }
 
-    const sql = db();
     const token = crypto.randomUUID().replace(/-/g, "");
     const expires = new Date(Date.now() + 60 * 60 * 1000).toISOString();
 
     try {
-      await sql`
-        UPDATE users SET reset_token = ${token}, reset_token_expires_at = ${expires}
-        WHERE email = ${email}
-      `;
+      await db.user.updateMany({
+        where: { email },
+        data: { reset_token: token, reset_token_expires_at: expires },
+      });
       const baseUrl = appBaseUrl(request);
       const link = `${baseUrl}/reset-password?token=${token}`;
       await sendEmail({

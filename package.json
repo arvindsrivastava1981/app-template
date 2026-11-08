@@ -9,17 +9,20 @@
     "start": "next start",
     "build:cf": "opennextjs-cloudflare build",
     "deploy:cf": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production",
-    "cf:dev": "wrangler dev --env=production"
+    "cf:dev": "wrangler dev --env=production",
+    "test": "vitest run --config vitest.config.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.3",
-    "@neondatabase/serverless": "^1.2.0",
     "@opennextjs/cloudflare": "^1.20.16",
+    "@prisma/adapter-pg": "^7.10.1",
+    "@prisma/client": "^7.0.0",
     "bcryptjs": "^3.0.3",
+    "dotenv": "^16.6.1",
     "jose": "^6.2.12",
     "lucide-react": "^1.43.0",
     "next": "16.4.5",
-    "pg": "^8.23.0",
+    "pg": "^8.23.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-hook-form": "^7.91.0",
@@ -30,11 +33,14 @@
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
+    "@types/pg": "^8.11.0",
     "@vitejs/plugin-react": "^6.1.1",
     "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
+    "prisma": "^7.0.0",
     "tailwindcss": "^4",
+    "tsx": "^4.0.0",
     "vitest": "^5.0.0",
     "wrangler": "^4.130.0"
   }

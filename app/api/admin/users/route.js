@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth/current-user";
+import { getCurrentUser } from "@/lib/auth/current-user.server";
 import { isAdmin, listUsers, createUser, updateUser, deleteUser } from "@/lib/auth/admin";
 import { logError } from "@/lib/core/error-log";
 

@@ -11,21 +11,22 @@ export async function GET(request) {
       return NextResponse.json({ error: "Missing verification token." }, { status: 400 });
     }
 
-    const sql = db();
-    const rows = await sql`
-      SELECT id FROM users
-      WHERE verification_token = ${token} AND verification_token_expires_at > NOW() LIMIT 1
-    `;
-    const row = rows[0];
+    const row = await db.user.findFirst({
+      where: {
+        verification_token: token,
+        verification_token_expires_at: { gt: new Date() },
+      },
+      select: { id: true },
+    });
     if (!row) {
       await logStatusError("auth/verify-email", "Invalid or expired verification token", { status_code: 400 });
       return NextResponse.json({ error: "This verification link is invalid or has expired." }, { status: 400 });
     }
 
-    await sql`
-      UPDATE users SET verification_token = NULL, verification_token_expires_at = NULL
-      WHERE id = ${row.id}
-    `;
+    await db.user.update({
+      where: { id: row.id },
+      data: { verification_token: null, verification_token_expires_at: null },
+    });
 
     return NextResponse.redirect(new URL("/login?verified=1", request.url));
   } catch (err) {

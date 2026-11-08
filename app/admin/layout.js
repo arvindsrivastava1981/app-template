@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import AdminSidebar from "@/components/layout/AdminSidebar";
-import { getCurrentUser } from "@/lib/auth/current-user";
+import { getCurrentUser } from "@/lib/auth/current-user.server";
 import { isAdmin } from "@/lib/auth/admin";
 import { getSetting } from "@/lib/settings/service";
 import { APP_NAME } from "@/lib/public/branding";

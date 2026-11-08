@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                        String     @id @default(uuid()) @db.Uuid
+  email                     String     @unique
+  password_hash             String?
+  full_name                 String?
+  role                      String     @default("user")
+  verification_token        String?
+  verification_token_expires_at DateTime? @db.Timestamptz
+  reset_token               String?
+  reset_token_expires_at    DateTime? @db.Timestamptz
+  created_at                DateTime   @default(now()) @db.Timestamptz
+  updated_at                DateTime   @updatedAt @db.Timestamptz
+  system_settings           SystemSetting[]
+
+  @@map("users")
+}
+
+model ErrorLog {
+  id            String   @id @default(uuid()) @db.Uuid
+  method        String   @default("GET")
+  path          String
+  status_code   Int
+  error_type    String
+  message       String
+  detail        String?
+  traceback_text String?
+  endpoint      String?
+  request_id    String?
+  source        String   @default("BACKEND")
+  created_at    DateTime @default(now()) @db.Timestamptz
+
+  @@map("error_logs")
+}
+
+model SystemSetting {
+  key         String   @id
+  value       String
+  updated_by  String?  @db.Uuid
+  updated_at  DateTime @updatedAt @db.Timestamptz
+  user        User?    @relation(fields: [updated_by], references: [id], onDelete: SetNull)
+
+  @@map("system_settings")
+}

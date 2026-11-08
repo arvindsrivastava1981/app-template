@@ -45,7 +45,7 @@ export default function AuthForm({ mode, token = "" }) {
           response = await fetch("/api/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ identifier: data.identifier, password: data.password }),
+            body: JSON.stringify({ email: data.identifier, password: data.password }),
           });
           break;
         case "register":

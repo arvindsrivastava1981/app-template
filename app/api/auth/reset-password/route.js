@@ -15,22 +15,23 @@ export async function POST(request) {
     }
 
     try {
-      const sql = db();
-      const rows = await sql`
-        SELECT id FROM users
-        WHERE reset_token = ${token} AND reset_token_expires_at > NOW() LIMIT 1
-      `;
-      const row = rows[0];
+      const row = await db.user.findFirst({
+        where: {
+          reset_token: token,
+          reset_token_expires_at: { gt: new Date() },
+        },
+        select: { id: true },
+      });
       if (!row) {
         await logStatusError("auth/confirm-reset", "Invalid or expired reset token", { status_code: 400 });
         return NextResponse.json({ error: "This reset link is invalid or has expired." }, { status: 400 });
       }
 
       const passwordHash = await hashPassword(password);
-      await sql`
-        UPDATE users SET password_hash = ${passwordHash}, reset_token = NULL, reset_token_expires_at = NULL
-        WHERE id = ${row.id}
-      `;
+      await db.user.update({
+        where: { id: row.id },
+        data: { password_hash: passwordHash, reset_token: null, reset_token_expires_at: null },
+      });
       return NextResponse.json({ ok: true, message: "Password updated. You can now log in." }, { status: 200 });
     } catch (err) {
       console.error("[auth] confirmReset failed:", err);

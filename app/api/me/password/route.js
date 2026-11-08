@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth/current-user";
+import { getCurrentUser } from "@/lib/auth/current-user.server";
 import { verifyPassword } from "@/lib/auth/password";
 import { hashPassword } from "@/lib/auth/password";
 import { logError } from "@/lib/core/error-log";
@@ -21,9 +21,10 @@ export async function PATCH(request) {
       return NextResponse.json({ error: "New password must be at least 8 characters." }, { status: 400 });
     }
 
-    const sql = db();
-    const rows = await sql`SELECT password_hash FROM users WHERE id = ${ctx.user.id} LIMIT 1`;
-    const row = rows[0];
+    const row = await db.user.findUnique({
+      where: { id: ctx.user.id },
+      select: { password_hash: true },
+    });
     if (!row) {
       return NextResponse.json({ error: "User not found." }, { status: 404 });
     }
@@ -34,11 +35,10 @@ export async function PATCH(request) {
     }
 
     const passwordHash = await hashPassword(new_password);
-    await sql`
-      UPDATE users
-      SET password_hash = ${passwordHash}, updated_at = NOW()
-      WHERE id = ${ctx.user.id}
-    `;
+    await db.user.update({
+      where: { id: ctx.user.id },
+      data: { password_hash: passwordHash },
+    });
 
     return NextResponse.json({ ok: true, message: "Password updated successfully." }, { status: 200 });
   } catch (err) {

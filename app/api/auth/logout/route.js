@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { logError } from "@/lib/core/error-log";
 
 const COOKIE_NAMES = ["app_session"];
 
@@ -17,6 +18,7 @@ export async function POST(request) {
     return response;
   } catch (err) {
     console.error("[auth] logout failed:", err);
+    await logError({ endpoint: "auth/logout", status_code: 500, message: "Logout failed", traceback_text: err, source: "BACKEND" });
     return NextResponse.json({ error: "Logout failed." }, { status: 500 });
   }
 }

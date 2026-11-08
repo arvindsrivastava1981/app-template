@@ -26,19 +26,18 @@ export async function POST(request) {
       return NextResponse.json({ error: "Email and password are required." }, { status: 400 });
     }
 
-    const sql = db();
-    let rows;
+    let row;
     try {
-      rows = await sql`
-        SELECT id, email, password_hash, full_name
-        FROM users WHERE email = ${email} LIMIT 1
-      `;
+      row = await db.user.findUnique({
+        where: { email },
+        select: { id: true, email: true, password_hash: true, full_name: true },
+      });
     } catch (err) {
       await logError({ endpoint: "auth/login", status_code: 500, message: "Login lookup failed", traceback_text: err, source: "BACKEND" });
       return NextResponse.json({ error: "Login failed. Please try again." }, { status: 500 });
     }
 
-    const row = rows[0];
+    if (!row || !row.password_hash) {
     if (!row || !row.password_hash) {
       await logStatusError("auth/login", "Invalid login credentials", { status_code: 401 });
       return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });

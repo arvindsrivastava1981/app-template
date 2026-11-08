@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/auth/current-user";
+import { getCurrentUser } from "@/lib/auth/current-user.server";
 import { logError } from "@/lib/core/error-log";
+import { db } from "@/lib/core/db";
 
 export async function PATCH(request) {
   try {
@@ -15,19 +16,18 @@ export async function PATCH(request) {
     }
 
     // Update user via direct DB access (simpler than going through admin.js which checks isAdmin)
-    const { db } = await import("@/lib/core/db");
-    const sql = db();
-
-    const existing = await sql`SELECT id FROM users WHERE email = ${email} AND id != ${ctx.user.id} LIMIT 1`;
-    if (existing.length) {
+    const existing = await db.user.findFirst({
+      where: { email, id: { not: ctx.user.id } },
+      select: { id: true },
+    });
+    if (existing) {
       return NextResponse.json({ error: "An account with that email already exists." }, { status: 409 });
     }
 
-    await sql`
-      UPDATE users
-      SET full_name = ${full_name}, email = ${email}, updated_at = NOW()
-      WHERE id = ${ctx.user.id}
-    `;
+    await db.user.update({
+      where: { id: ctx.user.id },
+      data: { full_name, email },
+    });
 
     return NextResponse.json({ ok: true, message: "Profile updated successfully." }, { status: 200 });
   } catch (err) {
