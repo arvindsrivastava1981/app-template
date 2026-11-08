@@ -2,18 +2,17 @@
   "name": "app-template",
   "version": "1.0.0",
   "private": true,
-  "description": "Next.js app template for Cloudflare deployment",
+  "description": "Next.js app template for deployment",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "build:cf": "opennextjs-cloudflare build",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production",
-    "cf:dev": "wrangler dev"
+    "deploy:cf": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.3",
-    "@neonedatabase/serverless": "^1.2.0",
+    "@neondatabase/serverless": "^1.2.0",
     "bcryptjs": "^3.0.3",
     "jose": "^6.2.12",
     "lucide-react": "^1.43.0",
