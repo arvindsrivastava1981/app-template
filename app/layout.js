@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ToasterProvider } from "@/components/ui/Toaster";
+import VersionBanner from "@/components/ui/VersionBanner";
 import { APP_NAME } from "@/lib/public/branding";
 
 export function generateMetadata() {
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+        <VersionBanner />
         <ToasterProvider>{children}</ToasterProvider>
       </body>
     </html>
