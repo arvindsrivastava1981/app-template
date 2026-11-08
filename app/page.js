@@ -51,7 +51,7 @@ export default function LandingPage() {
             </div>
             <div className="hidden md:flex items-center gap-6 text-sm font-medium">
               <Link href="/login" className="text-zinc-600 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400">Sign in</Link>
-              <Link href="/register" className="text-zinc-600 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400">Get started</Link>
+              <Link href="/register" className="text-zinc-600 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400">Signup</Link>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function LandingPage() {
           </p>
           <div className="mt-10 flex items-center justify-center gap-4">
             <Link href="/register" className="rounded-lg bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700">
-              Start building
+              Signup
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>
             <Link href="/login" className="rounded-lg border border-zinc-200 bg-white px-6 py-3 text-sm font-semibold text-zinc-900 hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800">
@@ -110,7 +110,7 @@ export default function LandingPage() {
           </div>
           <nav className="flex items-center gap-6 text-xs text-zinc-500 dark:text-zinc-400">
             <Link href="/login" className="hover:text-zinc-900 dark:hover:text-zinc-100">Sign in</Link>
-            <Link href="/register" className="hover:text-zinc-900 dark:hover:text-zinc-100">Get started</Link>
+            <Link href="/register" className="hover:text-zinc-900 dark:hover:text-zinc-100">Signup</Link>
           </nav>
         </div>
       </footer>

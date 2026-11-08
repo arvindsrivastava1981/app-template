@@ -41,7 +41,7 @@ export default function AuthShell({ children, title, subtitle, showPrivacy = fal
         <div className="mt-6 flex items-center justify-center gap-2 text-xs text-zinc-500 dark:text-zinc-500">
           <Link href="/login" className="hover:text-emerald-700 dark:hover:text-emerald-400">Sign in</Link>
           <span className="mx-2">·</span>
-          <Link href="/register" className="hover:text-emerald-700 dark:hover:text-emerald-400">Get started</Link>
+          <Link href="/register" className="hover:text-emerald-700 dark:hover:text-emerald-400">Signup</Link>
         </div>
       </div>
     </main>

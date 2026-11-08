@@ -9,6 +9,8 @@ binding = "ASSETS"
 
 [vars]
 NEXT_PUBLIC_APP_URL = "https://bima.vahankhata.in"
+DATABASE_URL = "postgres://da29d36150d1229637cabbb4da9b3f30aca7c916c9cbdba7c058e37abd9dd008:sk_WeApMkVaeyo210gAY1v5Z@db.prisma.io:5432/postgres?sslmode=require"
 
 [env.production.vars]
 NEXT_PUBLIC_APP_URL = "https://bima.vahankhata.in"
+DATABASE_URL = "postgres://da29d36150d1229637cabbb4da9b3f30aca7c916c9cbdba7c058e37abd9dd008:sk_WeApMkVaeyo210gAY1v5Z@db.prisma.io:5432/postgres?sslmode=require"
