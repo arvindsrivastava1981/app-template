@@ -137,14 +137,6 @@ export default function AuthForm({ mode, token = "" }) {
         </div>
       )}
 
-      {(mode === "login" || mode === "register") && (
-        <div className="mt-2">
-          <a href="/api/auth/google" className="relative flex w-full items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 focus-visible:outline-2 focus-visible:outline-emerald-600">
-            <span>Continue with Google</span>
-          </a>
-        </div>
-      )}
-
       <div className="mt-4 border-t border-zinc-200 pt-4 text-sm dark:border-zinc-800">
         {mode === "login" && (
           <div className="flex flex-col gap-1 text-zinc-600 dark:text-zinc-400">

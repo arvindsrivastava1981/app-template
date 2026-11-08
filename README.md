@@ -27,22 +27,18 @@ A plug-and-play Next.js app template with authentication, user management, admin
 
 ```
 app-template/
-├── app/                    # Next.js App Router (pages, layouts, API routes)
-├── components/             # React components (UI, layout, auth)
-├── lib/                    # Server libraries (auth, core, settings)
-├── frontend/               # Frontend code organization (mirrors app/, components/)
-├── backend/                # Backend code organization (mirrors lib/)
-├── scripts/                # Deployment scripts and configs
-├── database/               # SQL schema and seed files
-├── public/                 # Static assets
-├── package.json
-├── next.config.mjs
-├── wrangler.toml
-├── open-next.config.ts
-├── proxy.js                # Next.js middleware (auth redirects, security headers)
-├── .env.example
-├── .gitignore
-└── README.md
+├─ app/              # Next.js App Router (pages, layouts, API routes)
+├─ components/       # React components (UI, layout, auth)
+├─ lib/              # Server libraries (auth, core, settings)
+├─ database/         # SQL schema and seed files
+├─ docs/             # APP-Template-MIND-MAP.MD — full project map
+├─ package.json
+├─ next.config.mjs
+├─ wrangler.toml
+├─ open-next.config.ts
+├─ .env.example
+├─ .gitignore
+└─ README.md
 ```
 
 ## Quick Start
@@ -57,8 +53,8 @@ npm install
 ### 2. Configure environment
 
 ```bash
-cp .env.example .env.local
-# Edit .env.local with your DATABASE_URL, JWT_SECRET, etc.
+cp .env.example .env
+# Edit .env with your DATABASE_URL, JWT_SECRET, NEXT_PUBLIC_APP_URL, RESEND_API_KEY
 ```
 
 ### 3. Set up the database
@@ -90,17 +86,14 @@ Open http://localhost:3000
 | `npm run dev` | Start development server |
 | `npm run build` | Build for production |
 | `npm run start` | Start production server |
-| `npm run test:run` | Run tests |
-| `npm run lint` | Run ESLint |
 | `npm run build:cf` | Build for Cloudflare Workers |
-| `npm run deploy` | Deploy to Cloudflare production |
 | `npm run cf:dev` | Run with wrangler locally |
 
 ## Deployment (Cloudflare)
 
 ```bash
 # Build and deploy
-npm run deploy
+npm run deploy:cf
 
 # Or build only
 npm run build:cf

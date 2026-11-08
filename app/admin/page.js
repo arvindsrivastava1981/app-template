@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LayoutDashboard, Users, Shield, Settings, AlertTriangle } from "lucide-react";
+import { LayoutDashboard, Users } from "lucide-react";
 import PageHeader from "@/components/layout/PageHeader";
 import Card from "@/components/ui/Card";
 import { db } from "@/lib/core/db";
@@ -25,7 +25,7 @@ export default async function AdminDashboard() {
       <PageHeader
         icon={LayoutDashboard}
         title="Admin Dashboard"
-        subtitle="Manage users and system settings"
+        subtitle="Manage users"
       />
 
       <section className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -45,15 +45,6 @@ export default async function AdminDashboard() {
             </span>
             <h3 className="mt-3 font-medium text-zinc-900 group-hover:text-emerald-600 dark:text-zinc-100 dark:group-hover:text-emerald-400">User Management</h3>
             <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Create, list, and manage all users.</p>
-          </Card>
-        </Link>
-        <Link href="/admin" className="group">
-          <Card interactive className="h-full p-5">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-shield-50 text-shield-600 dark:bg-zinc-800 dark:text-zinc-400">
-              <Shield className="h-5 w-5" strokeWidth={1.75} />
-            </span>
-            <h3 className="mt-3 font-medium text-zinc-900 group-hover:text-emerald-600 dark:text-zinc-100 dark:group-hover:text-emerald-400">System Settings</h3>
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Configure application settings.</p>
           </Card>
         </Link>
       </section>

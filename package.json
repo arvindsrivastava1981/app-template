@@ -8,7 +8,6 @@
     "build": "next build --webpack",
     "start": "next start",
     "build:cf": "opennextjs-cloudflare build",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production",
     "deploy:cf": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production",
     "cf:dev": "wrangler dev --env=production"
   },

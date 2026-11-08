@@ -3,16 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { LayoutDashboard, Users, Shield, Settings, LogOut, Menu, X, AlertTriangle } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, Menu, X } from "lucide-react";
 
 const NAV = [
   { label: "Admin", items: [
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
     { href: "/admin/users", label: "User Management", icon: Users },
-    { href: "/admin/error-logs", label: "Error Logs", icon: AlertTriangle },
-  ]},
-  { label: "System", items: [
-    { href: "/admin/system", label: "System Settings", icon: Settings },
   ]},
 ];
 
