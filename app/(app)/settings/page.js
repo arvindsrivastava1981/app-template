@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Settings as SettingsIcon, ShieldCheck, Mail, User, LogOut } from "lucide-react";
-import { getCurrentUser } from "@/lib/auth/current-user";
+import { getCurrentUserClient } from "@/lib/auth/current-user";
 import PageHeader from "@/components/layout/PageHeader";
 import Card from "@/components/ui/Card";
 import { toast } from "@/components/ui/Toaster";
@@ -27,7 +27,7 @@ const passwordSchema = z.object({
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
-  const ctx = await getCurrentUser();
+  const ctx = await getCurrentUserClient();
   if (!ctx) return null;
 
   const [activeTab, setActiveTab] = useState("profile");

@@ -5,7 +5,7 @@
   "description": "Plug-and-play Next.js app template with auth, admin, user management, profile, and password flows.",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "cross-env TURBOPACK=0 next build",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest",
@@ -15,6 +15,8 @@
     "cf:dev": "wrangler dev"
   },
   "dependencies": {
+    "@hookform/resolvers": "^7.0.3",
+    "@neondatabase/serverless": "^1.2.0",
     "bcryptjs": "^3.0.3",
     "jose": "^6.2.12",
     "lucide-react": "^1.43.0",
@@ -22,6 +24,7 @@
     "pg": "^8.23.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "react-hook-form": "^7.91.0",
     "resend": "^6.26.0",
     "zod": "^3.25.76"
   },
@@ -31,6 +34,7 @@
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
     "@vitejs/plugin-react": "^6.1.1",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "tailwindcss": "^4",
