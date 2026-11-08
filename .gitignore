@@ -1,33 +1,37 @@
 # Dependencies
 node_modules/
-.pnp/
-.pnp.js
 
-# Next.js
+# Next.js build output
 .next/
-out/
-build/
 
-# Environment
+# OpenNext build output
+.open-next/
+
+# Wrangler config
+.wrangler/
+
+# Environment variables
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
+.env.production
 
 # Logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Vitest
+coverage/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
