@@ -8,7 +8,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "build:cf": "opennextjs-cloudflare build",
-    "deploy:cf": "opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production",
+    "deploy:cf": "npm test && opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production",
     "cf:dev": "wrangler dev --env=production",
     "test": "vitest run --config vitest.config.mjs"
   },
