@@ -11,10 +11,18 @@ export default function VerifyEmailClient({ token }) {
     if (!token) return;
     fetch(`/api/auth/verify-email?token=${token}`)
       .then((res) => {
-        if (res.ok) setVerified(true);
-        else setVerified(false);
+        if (res.ok) {
+          setVerified(true);
+          toast("Email verified successfully.", "success");
+        } else {
+          setVerified(false);
+          toast("Invalid or expired verification link.", "error");
+        }
       })
-      .catch(() => setError("Verification failed. Please try again."));
+      .catch(() => {
+        setError("Verification failed. Please try again.");
+        toast("Network error. Please try again.", "error");
+      });
   }, [token]);
 
   if (error) return <p className="text-center text-sm text-red-600 dark:text-red-400">{error}</p>;

@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Users, LogOut, Menu, X, Shield } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, Menu, X, Shield, Bug } from "lucide-react";
 
 const NAV = [
   { label: "Admin", items: [
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
     { href: "/admin/users", label: "User Management", icon: Users },
+    { href: "/admin/error-logs", label: "Error Logs", icon: Bug, exact: true },
   ]},
 ];
 
@@ -37,8 +38,15 @@ export default function AdminSidebar({ userName, appName = "App" }) {
         headers: { "Content-Type": "application/json" },
         cache: "no-store",
       });
-      window.location.assign(response.ok ? "/" : "/login");
+      if (response.ok) {
+        toast("Signed out successfully.", "success");
+        window.location.assign("/");
+      } else {
+        toast("Unable to sign out. Please try again.", "error");
+        window.location.assign("/login");
+      }
     } catch (err) {
+      toast("Network error. Please try again.", "error");
       window.location.assign("/login");
     }
   }

@@ -36,11 +36,14 @@ export default function Sidebar({ userName, appName = "App" }) {
         cache: "no-store",
       });
       if (response.ok) {
+        toast("Signed out successfully.", "success");
         window.location.assign("/");
       } else {
+        toast("Unable to sign out. Please try again.", "error");
         window.location.assign("/login");
       }
     } catch (err) {
+      toast("Network error. Please try again.", "error");
       window.location.assign("/login");
     }
   }
