@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 export const dynamic = "error";
 
 export const metadata = {
-  title: App Template | Secure Authentication & User Management,
+  title: `App Template | Secure Authentication & User Management`,
   description: "Production-ready Next.js template with login, signup, profile management, password reset, and admin dashboard.",
   openGraph: {
     title: "App Template | Secure Authentication & User Management",
