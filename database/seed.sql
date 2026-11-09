@@ -11,7 +11,7 @@ TRUNCATE TABLE users RESTART IDENTITY CASCADE;
 INSERT INTO users (id, email, password_hash, full_name, role, created_at) VALUES
   ('a1111111-1111-1111-1111-111111111111',
    'admin@test.in',
-   '$2b$10$SzOoC3GoGv13fvwT7.I.vOb.tb9Lm1rFZsSnN6XwGKE8W7kHoWiPq',
+   '$2b$10$jz/IwHM47f6bSyq93fIauOqbbOQKTM4CI0uhjSV0sALvf24DJ284i',
    'System Administrator',
    'admin',
    NOW()),

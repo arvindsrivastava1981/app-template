@@ -38,11 +38,9 @@ export async function POST(request) {
     }
 
     if (!row || !row.password_hash) {
-    if (!row || !row.password_hash) {
       await logStatusError("auth/login", "Invalid login credentials", { status_code: 401 });
       return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
     }
-
     const ok = await verifyPassword(password, row.password_hash);
     if (!ok) {
       await logStatusError("auth/login", "Invalid login credentials", { status_code: 401 });
