@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LayoutDashboard, Users, LogOut, Menu, X, Shield } from "lucide-react";
 
 const NAV = [
@@ -42,6 +42,17 @@ export default function AdminSidebar({ userName, appName = "App" }) {
       window.location.assign("/login");
     }
   }
+
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   const activeClass = (active) =>
     active ? "bg-violet-600 font-medium text-white shadow-sm" : "text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800";
