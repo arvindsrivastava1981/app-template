@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useCallback } from "react";
 import { Bug, AlertTriangle, RefreshCw, Trash2, Activity } from "lucide-react";
 import PageHeader from "@/components/layout/PageHeader";
