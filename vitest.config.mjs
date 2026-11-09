@@ -14,5 +14,8 @@ export default defineConfig({
     environment: "node",
     include: ["tests/**/*.test.{js,jsx}"],
     setupFiles: ["./tests/setup.js"],
+    isolate: false,
+    maxWorkers: 1,
+    pool: "forks",
   },
 });
