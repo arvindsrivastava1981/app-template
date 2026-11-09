@@ -32,3 +32,8 @@ JWT_SECRET = "change-me-with-a-long-random-secret"
 # Resend (transactional email: verification + password reset)
 RESEND_API_KEY = "re_1234567890"
 EMAIL_FROM = "App Template <no-reply@yourdomain.in>"
+# Cloudflare API token for cache clearance (get from: https://dash.cloudflare.com/profile/api-tokens)
+# Replace med9gRxxxA with your actual Cloudflare API token from the dashboard
+CF_API_TOKEN = "your-cloudflare-api-token-here"
+# Cloudflare Zone ID (replace with your actual zone ID, e.g. abc123def456)
+CF_ZONE_ID = "your-cloudflare-zone-id-here"

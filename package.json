@@ -8,7 +8,7 @@
   "build": "next build --webpack",
   "start": "next start",
   "build:cf": "opennextjs-cloudflare build",
-  "deploy:cf": "npm test && opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production",
+  "deploy:cf": "npm test && opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production && echo '' && echo '=== Cloudflare CDN Cache Clearance Required ===' && echo '1. Go to: https://dash.cloudflare.com' && echo '2. Select your domain' && echo '3. Caching > Configuration > Clear Cache' && echo '' && echo '   OR run: curl -X DELETE \"https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache\" -H \"Authorization: Bearer {API_TOKEN}\" --data '{\"files\":[\"/_next/static/css/*\"]}'",
   "cf:dev": "wrangler dev --env=production",
   "pretest": "node -e \"const fs=require('fs');['.vitest','node_modules/.cache/vitest'].forEach(d=>{try{fs.rmSync(d,{recursive:true,force:true})}catch{}})\"",
   "test": "vitest run --config vitest.config.mjs"
