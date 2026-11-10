@@ -82,19 +82,21 @@ describe("database system_setting data", () => {
     let result;
     try {
       result = await db.systemSetting.findMany({
-        where: { value: null },
         select: { key: true, value: true },
       });
     } catch (err) {
-      console.error("[STEP: prisma systemSetting find null values] failed:", err);
+      console.error("[STEP: prisma systemSetting findAll] failed:", err);
       throw err;
     }
 
     try {
       expect(result).toBeDefined();
-      expect(result.length).toBe(0);
+      result.forEach((r) => {
+        expect(r.value).not.toBeNull();
+        expect(r.value).toBeDefined();
+      });
     } catch (err) {
-      console.error("[STEP: assert no null values] failed:", err);
+      console.error("[STEP: assert systemSetting values non-null] failed:", err);
       throw err;
     }
   });

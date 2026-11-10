@@ -71,7 +71,7 @@ describe("POST /api/auth/register", () => {
     expect(mockHashPassword).toHaveBeenCalledWith("password123");
     expect(mockDb.user.create).toHaveBeenCalled();
     expect(mockSendEmail).toHaveBeenCalled();
-    expect(mockCreateSessionToken).toHaveBeenCalledWith(expect.any(String), expect.any(Number));
+    expect(mockCreateSessionToken).toHaveBeenCalledWith(expect.any(String), expect.any(Number), "user");
     const cookie = res.headers.get("set-cookie") || "";
     expect(cookie).toContain("app_session=mock-session-token");
   });

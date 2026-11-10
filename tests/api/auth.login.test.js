@@ -67,7 +67,7 @@ describe("POST /api/auth/login", () => {
     const body = await res.json();
     expect(body.ok).toBe(true);
     expect(body.message).toBe("Login successful.");
-    expect(mockCreateSessionToken).toHaveBeenCalledWith("u1", expect.any(Number));
+    expect(mockCreateSessionToken).toHaveBeenCalledWith("u1", expect.any(Number), "user");
     const cookie = res.headers.get("set-cookie") || "";
     expect(cookie).toContain("app_session=mock-session-token");
   });

@@ -6,6 +6,7 @@
   "scripts": {
   "dev": "next dev",
   "build": "next build --webpack",
+  "postinstall": "prisma generate",
   "start": "next start",
   "build:cf": "opennextjs-cloudflare build",
   "deploy:cf": "npm test && opennextjs-cloudflare build && opennextjs-cloudflare deploy --env=production && echo '' && echo '=== Cloudflare CDN Cache Clearance Required ===' && echo '1. Go to: https://dash.cloudflare.com' && echo '2. Select your domain' && echo '3. Caching > Configuration > Clear Cache' && echo '' && echo '   OR run: curl -X DELETE \"https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache\" -H \"Authorization: Bearer {API_TOKEN}\" --data '{\"files\":[\"/_next/static/css/*\"]}'",
