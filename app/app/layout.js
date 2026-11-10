@@ -1,8 +1,6 @@
-import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import { getCurrentUser } from "@/lib/auth/current-user.server";
-import { isAdmin } from "@/lib/auth/admin";
 import { getSetting } from "@/lib/settings/service";
 import { APP_NAME } from "@/lib/public/branding";
 
@@ -10,9 +8,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AppLayout({ children }) {
   const ctx = await getCurrentUser();
-  if (!ctx) redirect("/login");
-
-  if (await isAdmin(ctx.user.id)) redirect("/admin");
+  if (!ctx || !ctx.user) return null; // middleware redirects unauthenticated users to /login
 
   const appName = await getSetting("app_name");
 

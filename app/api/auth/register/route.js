@@ -78,7 +78,7 @@ export async function POST(request) {
     }
 
     const ttlSeconds = SESSION_TTL_SECONDS;
-    const token = await createSessionToken(userId, ttlSeconds);
+    const token = await createSessionToken(userId, ttlSeconds, "user");
     const response = NextResponse.json({ ok: true, message: "Account created successfully." }, { status: 201 });
     response.cookies.set(sessionCookie(token, ttlSeconds));
     return response;

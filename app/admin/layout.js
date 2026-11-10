@@ -1,7 +1,5 @@
-import { redirect } from "next/navigation";
 import AdminSidebar from "@/components/layout/AdminSidebar";
 import { getCurrentUser } from "@/lib/auth/current-user.server";
-import { isAdmin } from "@/lib/auth/admin";
 import { getSetting } from "@/lib/settings/service";
 import { APP_NAME } from "@/lib/public/branding";
 
@@ -9,9 +7,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminLayout({ children }) {
   const ctx = await getCurrentUser();
-  if (!ctx) redirect("/login");
-
-  if (!(await isAdmin(ctx.user.id))) redirect("/app");
+  if (!ctx || !ctx.user) return null; // middleware redirects unauthenticated users to /login
 
   const appName = await getSetting("app_name");
 

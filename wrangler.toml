@@ -33,7 +33,12 @@ JWT_SECRET = "change-me-with-a-long-random-secret"
 RESEND_API_KEY = "re_1234567890"
 EMAIL_FROM = "App Template <no-reply@yourdomain.in>"
 # Cloudflare API token for cache clearance (get from: https://dash.cloudflare.com/profile/api-tokens)
-# Replace med9gRxxxA with your actual Cloudflare API token from the dashboard
+# REQUIRED: Replace "your-cloudflare-api-token-here" with your real API token
 CF_API_TOKEN = "your-cloudflare-api-token-here"
-# Cloudflare Zone ID (replace with your actual zone ID, e.g. abc123def456)
+# Cloudflare Zone ID (get from: https://dash.cloudflare.com → Overview → Zone ID)
+# REQUIRED: Replace "your-cloudflare-zone-id-here" with your real Zone ID
 CF_ZONE_ID = "your-cloudflare-zone-id-here"
+
+# After deploying to production, purge Cloudflare cache so new CSS/JS assets are served:
+# Dashboard: Caching > Configuration > Clear Cache  (purge /_next/static/css/*)
+# Or run the curl command from the deploy:cf script.
